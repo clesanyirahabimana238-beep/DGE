@@ -11,6 +11,7 @@
     "backend:start": "npm run start --prefix backend",
     "backend:dev": "npm run dev --prefix backend",
     "backend:test": "npm test --prefix backend",
+    "backend:seed:users": "npm run seed:users --prefix backend",
     "build": "npm install --prefix backend",
     "start": "npm run start --prefix backend"
   }
