@@ -1,0 +1,118 @@
+{
+  "common": {
+    "appName": "D&G E-Commerce",
+    "location": "Rwamagana, Rwanda",
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "delete": "Delete",
+    "edit": "Edit",
+    "back": "Back",
+    "error": "Error",
+    "success": "Success",
+    "retry": "Try Again",
+    "currency": "RWF"
+  },
+  "nav": {
+    "home": "Home",
+    "products": "Products",
+    "cart": "Cart",
+    "orders": "Orders",
+    "profile": "Profile",
+    "dashboard": "Dashboard",
+    "manageProducts": "Inventory",
+    "sales": "Sales"
+  },
+  "auth": {
+    "loginTitle": "Welcome Back",
+    "loginSubtitle": "Sign in to your D&G E-Commerce account",
+    "registerTitle": "Create Account",
+    "registerSubtitle": "Join D&G E-Commerce in Rwamagana",
+    "name": "Full Name",
+    "email": "Email Address",
+    "password": "Password",
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "logout": "Log Out",
+    "noAccount": "Don't have an account?",
+    "haveAccount": "Already have an account?",
+    "registerClientNotice": "New accounts are registered as Clients.",
+    "loginSuccess": "Logged in successfully!",
+    "registerSuccess": "Account created successfully!"
+  },
+  "home": {
+    "searchPlaceholder": "Search products by name...",
+    "allCategories": "All",
+    "availableProducts": "Available Products"
+  },
+  "product": {
+    "inStock": "In Stock",
+    "outOfStock": "Out of Stock",
+    "unitsAvailable": "units available",
+    "addToCart": "Add to Cart",
+    "soldBy": "Sold by",
+    "description": "Description",
+    "noDescription": "No description provided for this product."
+  },
+  "cart": {
+    "title": "Shopping Cart",
+    "emptyTitle": "Your Cart is Empty",
+    "emptyDesc": "Browse products and add your favorite items to your shopping cart.",
+    "startShopping": "Start Shopping",
+    "total": "Total Amount",
+    "proceedToCheckout": "Proceed to Checkout",
+    "remove": "Remove"
+  },
+  "checkout": {
+    "title": "Order Checkout",
+    "deliveryAddress": "Delivery Address",
+    "addressPlaceholder": "Street, building, or landmark in Rwamagana...",
+    "addressError": "Please enter your delivery address in Rwamagana.",
+    "summary": "Order Summary",
+    "paymentNoticeTitle": "Payment on Delivery",
+    "paymentNoticeBody": "Placing this order sends your request to the seller. Payment will be collected in cash upon delivery in Rwamagana.",
+    "placeOrder": "Confirm & Place Order",
+    "orderSuccess": "Order Placed Successfully!"
+  },
+  "orders": {
+    "title": "My Orders",
+    "noOrders": "No Orders Yet",
+    "noOrdersDesc": "You have not placed any orders yet.",
+    "orderNumber": "Order",
+    "delivery": "Delivery",
+    "items": "items",
+    "placedOn": "Placed on",
+    "status": "Status",
+    "statusPending": "Pending",
+    "statusConfirmed": "Confirmed",
+    "statusShipped": "Shipped",
+    "statusDelivered": "Delivered",
+    "statusCancelled": "Cancelled"
+  },
+  "seller": {
+    "dashboard": "Seller Dashboard",
+    "myProducts": "My Products",
+    "customerOrders": "Customer Orders",
+    "salesSummary": "Sales Summary",
+    "deliveredOrders": "Delivered Orders",
+    "totalRevenue": "Total Revenue",
+    "avgOrderValue": "Average Order Value",
+    "addNew": "+ Add New",
+    "addNewProduct": "Add New Product",
+    "editProduct": "Edit Product",
+    "confirmOrder": "Confirm",
+    "shipOrder": "Ship Order",
+    "markDelivered": "Mark Delivered",
+    "orderFinalized": "Order is finalized"
+  },
+  "profile": {
+    "title": "My Profile",
+    "accountDetails": "Account Details",
+    "role": "Account Role",
+    "language": "Language / Ururimi",
+    "english": "English",
+    "kinyarwanda": "Ikinyarwanda",
+    "logoutConfirm": "Are you sure you want to log out?"
+  }
+}

@@ -1,0 +1,118 @@
+{
+  "common": {
+    "appName": "D&G E-Commerce",
+    "location": "Rwamagana, u Rwanda",
+    "loading": "Biratunganywa...",
+    "save": "Bika",
+    "cancel": "Kureka",
+    "confirm": "Emeza",
+    "delete": "Siba",
+    "edit": "Hindura",
+    "back": "Gusubira inyuma",
+    "error": "Ikosa",
+    "success": "Byagenze neza",
+    "retry": "Ongera ugerageze",
+    "currency": "RWF"
+  },
+  "nav": {
+    "home": "Ahabanza",
+    "products": "Ibicuruzwa",
+    "cart": "Igatebo",
+    "orders": "Ibyatumijwe",
+    "profile": "Umwirondoro",
+    "dashboard": "Imbonerahamwe",
+    "manageProducts": "Ububiko",
+    "sales": "Ibicuruzwa Byagurishijwe"
+  },
+  "auth": {
+    "loginTitle": "Murakaza neza",
+    "loginSubtitle": "Injira muri konti yawe ya D&G E-Commerce",
+    "registerTitle": "Fungura Konti",
+    "registerSubtitle": "Injira muri D&G E-Commerce i Rwamagana",
+    "name": "Amazina Yombi",
+    "email": "Imeri yawe",
+    "password": "Ijambo ry'ibanga",
+    "signIn": "Injira",
+    "signUp": "Iyandikishe",
+    "logout": "Sohoka",
+    "noAccount": "Nta konti ufite?",
+    "haveAccount": "Ufite konti usanzwe?",
+    "registerClientNotice": "Konti nshya zifungurwa nk'Umukiriya.",
+    "loginSuccess": "Winjiye neza muri konti!",
+    "registerSuccess": "Konti yawe yafunguwe neza!"
+  },
+  "home": {
+    "searchPlaceholder": "Shakisha ibicuruzwa ku izina...",
+    "allCategories": "Byose",
+    "availableProducts": "Ibicuruzwa Bihari"
+  },
+  "product": {
+    "inStock": "Biri mu bubiko",
+    "outOfStock": "Byashize mu bubiko",
+    "unitsAvailable": "biriho",
+    "addToCart": "Ongeramo mu Gatebo",
+    "soldBy": "Byagurishijwe na",
+    "description": "Ibisobanuro",
+    "noDescription": "Nta bisobanuro birambuye byatanzwe kuri iki gicuruzwa."
+  },
+  "cart": {
+    "title": "Igatebo Cy'Ibicuruzwa",
+    "emptyTitle": "Igatebo cyawe kirarangiye",
+    "emptyDesc": "Shakisha ibicuruzwa maze wongere ibyo ukunda mu gatebo kawe.",
+    "startShopping": "Tangira Guhaha",
+    "total": "Amafaranga Yose hamwe",
+    "proceedToCheckout": "Komeza Kwishyura",
+    "remove": "Kukuramo"
+  },
+  "checkout": {
+    "title": "Gusaba no Kwemeza Ibyatumijwe",
+    "deliveryAddress": "Aderesi Yo Kugezaho",
+    "addressPlaceholder": "Inzira, inyubako cyangwa ahantu hazwi i Rwamagana...",
+    "addressError": "Nyamuneka andika aho uherereye i Rwamagana.",
+    "summary": "Incamake y'Ibyatumijwe",
+    "paymentNoticeTitle": "Kwishyura Igihe Bikugezeho",
+    "paymentNoticeBody": "Gushyiraho iri tumiza byohereza ubusabe bwawe ku mucuruzi. Amafaranga azishyurwa mu ntoki cyangwa kuri telefoni igihe ibicuruzwa bikugezeho i Rwamagana.",
+    "placeOrder": "Emeza kandi Wohereze Itumiza",
+    "orderSuccess": "Ibyatumijwe Byakiriwe Neza!"
+  },
+  "orders": {
+    "title": "Ibyo Natumije",
+    "noOrders": "Nta byo watumije biraboneka",
+    "noOrdersDesc": "Nturashyiraho itumiza na rimwe.",
+    "orderNumber": "Itumiza #",
+    "delivery": "Kugezwaho",
+    "items": "ibintu",
+    "placedOn": "Byatanzwe ku wa",
+    "status": "Imiterere",
+    "statusPending": "Bitegerejwe",
+    "statusConfirmed": "Byemejwe",
+    "statusShipped": "Biri mu nzira",
+    "statusDelivered": "Byagezeho",
+    "statusCancelled": "Byahagaritswe"
+  },
+  "seller": {
+    "dashboard": "Imbonerahamwe y'Umucuruzi",
+    "myProducts": "Ibicuruzwa Byanjye",
+    "customerOrders": "Ibyatumijwe n'Abakiriya",
+    "salesSummary": "Incamake y'Ibyagurishijwe",
+    "deliveredOrders": "Ibyatumijwe Byagezeho",
+    "totalRevenue": "Amafaranga Yose Yinjiye",
+    "avgOrderValue": "Ikigereranyo ku Itumiza",
+    "addNew": "+ Ongeraho Gishya",
+    "addNewProduct": "Ongeraho Igicuruzwa Gishya",
+    "editProduct": "Hindura Igicuruzwa",
+    "confirmOrder": "Emeza",
+    "shipOrder": "Ohereza mu Nzira",
+    "markDelivered": "Byageze ku Mukiriya",
+    "orderFinalized": "Itumiza ryarangiye"
+  },
+  "profile": {
+    "title": "Umwirondoro Wanjye",
+    "accountDetails": "Amakuru ya Konti",
+    "role": "Icyiciro cya Konti",
+    "language": "Ururimi / Language",
+    "english": "English",
+    "kinyarwanda": "Ikinyarwanda",
+    "logoutConfirm": "Uremeza neza ko ushaka gusohoka muri konti?"
+  }
+}
