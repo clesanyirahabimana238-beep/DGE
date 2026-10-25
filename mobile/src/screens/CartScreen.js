@@ -9,11 +9,32 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
 import EmptyState from '../components/EmptyState';
 
 export const CartScreen = ({ navigation }) => {
   const { cartItems, totalAmount, totalItems, updateQuantity, removeFromCart } =
     useCart();
+  const { isAuthenticated } = useAuth();
+
+  const handleProceedToCheckout = () => {
+    if (!isAuthenticated) {
+      Alert.alert(
+        'Sign In Required',
+        'Please sign in or create an account to proceed with checkout and provide your delivery address in Rwamagana.',
+        [
+          { text: 'Cancel', style: 'cancel' },
+          {
+            text: 'Sign In',
+            onPress: () =>
+              navigation.navigate('Login', { returnTo: 'Checkout' }),
+          },
+        ]
+      );
+      return;
+    }
+    navigation.navigate('Checkout');
+  };
 
   const renderItem = ({ item }) => {
     const { product, quantity } = item;
@@ -87,7 +108,7 @@ export const CartScreen = ({ navigation }) => {
           title="Your Cart is Empty"
           description="Browse products and add your favorite items to your shopping cart."
           actionText="Start Shopping"
-          onAction={() => navigation.navigate('Home')}
+          onAction={() => navigation.navigate('HomeTab')}
         />
       ) : (
         <>
@@ -113,7 +134,7 @@ export const CartScreen = ({ navigation }) => {
 
             <Pressable
               style={styles.checkoutButton}
-              onPress={() => navigation.navigate('Checkout')}
+              onPress={handleProceedToCheckout}
             >
               <Text style={styles.checkoutButtonText}>Proceed to Checkout</Text>
             </Pressable>

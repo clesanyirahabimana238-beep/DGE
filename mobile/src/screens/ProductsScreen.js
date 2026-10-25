@@ -13,8 +13,10 @@ import ProductCard from '../components/ProductCard';
 import Loading from '../components/Loading';
 import ErrorMessage from '../components/ErrorMessage';
 import EmptyState from '../components/EmptyState';
+import { useCart } from '../context/CartContext';
 
 export const ProductsScreen = ({ navigation }) => {
+  const { addToCart } = useCart();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
@@ -84,6 +86,7 @@ export const ProductsScreen = ({ navigation }) => {
               onPress={() =>
                 navigation.navigate('ProductDetails', { productId: item.id })
               }
+              onAddToCart={() => addToCart(item, 1)}
             />
           )}
           ListEmptyComponent={

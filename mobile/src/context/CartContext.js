@@ -42,16 +42,19 @@ export const CartProvider = ({ children }) => {
   };
 
   const addToCart = (product, quantity = 1) => {
+    const availableStock =
+      product.stock_quantity !== undefined && product.stock_quantity !== null
+        ? Number(product.stock_quantity)
+        : 999;
     const existingIndex = cartItems.findIndex((item) => item.product.id === product.id);
 
     if (existingIndex > -1) {
       const updated = [...cartItems];
       const newQty = updated[existingIndex].quantity + quantity;
-      // Cap at available stock
-      updated[existingIndex].quantity = Math.min(newQty, product.stock_quantity);
+      updated[existingIndex].quantity = availableStock > 0 ? Math.min(newQty, availableStock) : newQty;
       saveCart(updated);
     } else {
-      const initialQty = Math.min(quantity, product.stock_quantity);
+      const initialQty = availableStock > 0 ? Math.min(quantity, availableStock) : quantity;
       if (initialQty > 0) {
         saveCart([...cartItems, { product, quantity: initialQty }]);
       }
@@ -66,7 +69,11 @@ export const CartProvider = ({ children }) => {
 
     const updated = cartItems.map((item) => {
       if (item.product.id === productId) {
-        const cappedQty = Math.min(newQuantity, item.product.stock_quantity);
+        const availableStock =
+          item.product.stock_quantity !== undefined && item.product.stock_quantity !== null
+            ? Number(item.product.stock_quantity)
+            : 999;
+        const cappedQty = availableStock > 0 ? Math.min(newQuantity, availableStock) : newQuantity;
         return { ...item, quantity: cappedQty };
       }
       return item;

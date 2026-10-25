@@ -13,7 +13,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuth } from '../context/AuthContext';
 
-export const RegisterScreen = ({ navigation }) => {
+export const RegisterScreen = ({ route, navigation }) => {
   const { register } = useAuth();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -41,6 +41,15 @@ export const RegisterScreen = ({ navigation }) => {
 
     try {
       await register(name.trim(), email.trim(), password);
+      const returnTo = route?.params?.returnTo;
+      const returnParams = route?.params?.returnParams;
+      if (returnTo) {
+        navigation.replace(returnTo, returnParams);
+      } else if (navigation.canGoBack()) {
+        navigation.goBack();
+      } else {
+        navigation.navigate('ClientTabs', { screen: 'HomeTab' });
+      }
     } catch (err) {
       setErrorMessage(
         err.response?.data?.error?.message || 'Registration failed. Please try again.'
@@ -151,7 +160,14 @@ export const RegisterScreen = ({ navigation }) => {
 
             <View style={styles.loginRow}>
               <Text style={styles.loginPrompt}>Already have an account? </Text>
-              <Pressable onPress={() => navigation.navigate('Login')}>
+              <Pressable
+                onPress={() =>
+                  navigation.navigate('Login', {
+                    returnTo: route?.params?.returnTo,
+                    returnParams: route?.params?.returnParams,
+                  })
+                }
+              >
                 <Text style={styles.loginLink}>Sign In</Text>
               </Pressable>
             </View>

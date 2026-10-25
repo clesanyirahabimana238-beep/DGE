@@ -16,9 +16,7 @@ export const AppNavigator = () => {
 
   return (
     <NavigationContainer>
-      {!isAuthenticated ? (
-        <AuthNavigator />
-      ) : isSeller ? (
+      {isAuthenticated && isSeller ? (
         <SellerNavigator />
       ) : (
         <ClientNavigator />

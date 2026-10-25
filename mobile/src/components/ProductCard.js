@@ -6,63 +6,64 @@ export const ProductCard = ({ product, onPress, onAddToCart }) => {
   const formattedPrice = Number(product.price).toLocaleString();
 
   return (
-    <Pressable
-      style={({ pressed }) => [styles.card, pressed && styles.cardPressed]}
-      onPress={onPress}
-    >
-      <View style={styles.imageContainer}>
-        {product.image_url ? (
-          <Image
-            source={{ uri: product.image_url }}
-            style={styles.image}
-            resizeMode="cover"
-          />
-        ) : (
-          <View style={styles.placeholderContainer}>
-            <Text style={styles.placeholderIcon}>🛍️</Text>
+    <View style={styles.card}>
+      <Pressable
+        style={({ pressed }) => [styles.cardTouchable, pressed && styles.cardPressed]}
+        onPress={onPress}
+      >
+        <View style={styles.imageContainer}>
+          {product.image_url ? (
+            <Image
+              source={{ uri: product.image_url }}
+              style={styles.image}
+              resizeMode="cover"
+            />
+          ) : (
+            <View style={styles.placeholderContainer}>
+              <Text style={styles.placeholderIcon}>🛍️</Text>
+            </View>
+          )}
+          <View style={styles.categoryBadge}>
+            <Text style={styles.categoryText}>{product.category}</Text>
           </View>
-        )}
-        <View style={styles.categoryBadge}>
-          <Text style={styles.categoryText}>{product.category}</Text>
         </View>
-      </View>
 
-      <View style={styles.content}>
-        <Text style={styles.name} numberOfLines={2}>
-          {product.name}
-        </Text>
-
-        <Text style={styles.price}>{formattedPrice} RWF</Text>
-
-        <View style={styles.footer}>
-          <Text
-            style={[
-              styles.stockText,
-              isOutOfStock ? styles.outOfStock : styles.inStock,
-            ]}
-          >
-            {isOutOfStock
-              ? 'Out of stock'
-              : `${product.stock_quantity} in stock`}
+        <View style={styles.content}>
+          <Text style={styles.name} numberOfLines={2}>
+            {product.name}
           </Text>
 
-          {onAddToCart && !isOutOfStock && (
-            <Pressable
-              style={({ pressed }) => [
-                styles.addButton,
-                pressed && styles.addButtonPressed,
-              ]}
-              onPress={(e) => {
-                e.stopPropagation();
-                onAddToCart(product);
-              }}
-            >
-              <Text style={styles.addButtonText}>+ Add</Text>
-            </Pressable>
-          )}
+          <Text style={styles.price}>{formattedPrice} RWF</Text>
         </View>
+      </Pressable>
+
+      <View style={styles.footerContainer}>
+        <Text
+          style={[
+            styles.stockText,
+            isOutOfStock ? styles.outOfStock : styles.inStock,
+          ]}
+        >
+          {isOutOfStock
+            ? 'Out of stock'
+            : `${product.stock_quantity} in stock`}
+        </Text>
+
+        {onAddToCart && !isOutOfStock && (
+          <Pressable
+            style={({ pressed }) => [
+              styles.addButton,
+              pressed && styles.addButtonPressed,
+            ]}
+            onPress={() => onAddToCart(product)}
+            accessibilityRole="button"
+            accessibilityLabel={`Add ${product.name} to cart`}
+          >
+            <Text style={styles.addButtonText}>+ Add</Text>
+          </Pressable>
+        )}
       </View>
-    </Pressable>
+    </View>
   );
 };
 
@@ -134,6 +135,19 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: '#1B5E20',
     marginBottom: 8,
+  },
+  cardTouchable: {
+    width: '100%',
+  },
+  footerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 12,
+    paddingBottom: 12,
+    paddingTop: 4,
+    borderTopWidth: 1,
+    borderTopColor: '#F0F0F0',
   },
   footer: {
     flexDirection: 'row',

@@ -11,6 +11,9 @@ import CheckoutScreen from '../screens/CheckoutScreen';
 import OrdersScreen from '../screens/OrdersScreen';
 import OrderDetailsScreen from '../screens/OrderDetailsScreen';
 import ProfileScreen from '../screens/ProfileScreen';
+import LoginScreen from '../screens/LoginScreen';
+import RegisterScreen from '../screens/RegisterScreen';
+import ForgotPasswordScreen from '../screens/ForgotPasswordScreen';
 import { useCart } from '../context/CartContext';
 
 const Tab = createBottomTabNavigator();
@@ -19,7 +22,6 @@ const Stack = createNativeStackNavigator();
 const HomeIcon = () => <Text style={styles.tabIcon}>🏠</Text>;
 const ProductsIcon = () => <Text style={styles.tabIcon}>🛍️</Text>;
 const CartIcon = () => <Text style={styles.tabIcon}>🛒</Text>;
-const OrdersIcon = () => <Text style={styles.tabIcon}>📦</Text>;
 const ProfileIcon = () => <Text style={styles.tabIcon}>👤</Text>;
 
 const ClientTabNavigator = () => {
@@ -47,7 +49,7 @@ const ClientTabNavigator = () => {
         name="ProductsTab"
         component={ProductsScreen}
         options={{
-          tabBarLabel: 'Catalog',
+          tabBarLabel: 'Products',
           tabBarIcon: ProductsIcon,
         }}
       />
@@ -59,14 +61,6 @@ const ClientTabNavigator = () => {
           tabBarBadge: totalItems > 0 ? totalItems : undefined,
           tabBarBadgeStyle: styles.cartBadge,
           tabBarIcon: CartIcon,
-        }}
-      />
-      <Tab.Screen
-        name="OrdersTab"
-        component={OrdersScreen}
-        options={{
-          tabBarLabel: 'Orders',
-          tabBarIcon: OrdersIcon,
         }}
       />
       <Tab.Screen
@@ -119,6 +113,21 @@ export const ClientNavigator = () => {
         name="OrderDetails"
         component={OrderDetailsScreen}
         options={{ title: 'Order Details' }}
+      />
+      <Stack.Screen
+        name="Login"
+        component={LoginScreen}
+        options={{ title: 'Sign In' }}
+      />
+      <Stack.Screen
+        name="Register"
+        component={RegisterScreen}
+        options={{ title: 'Create Account' }}
+      />
+      <Stack.Screen
+        name="ForgotPassword"
+        component={ForgotPasswordScreen}
+        options={{ title: 'Reset Password' }}
       />
     </Stack.Navigator>
   );

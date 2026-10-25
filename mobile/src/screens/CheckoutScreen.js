@@ -10,14 +10,23 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useEffect } from 'react';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
 import orderService from '../services/orderService';
 
 export const CheckoutScreen = ({ navigation }) => {
   const { cartItems, totalAmount, clearCart } = useCart();
+  const { isAuthenticated } = useAuth();
   const [deliveryAddress, setDeliveryAddress] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [addressError, setAddressError] = useState('');
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigation.replace('Login', { returnTo: 'Checkout' });
+    }
+  }, [isAuthenticated, navigation]);
 
   const handlePlaceOrder = async () => {
     if (!deliveryAddress.trim()) {

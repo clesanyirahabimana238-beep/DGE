@@ -12,6 +12,7 @@ import orderService from '../services/orderService';
 import Loading from '../components/Loading';
 import ErrorMessage from '../components/ErrorMessage';
 import EmptyState from '../components/EmptyState';
+import { useAuth } from '../context/AuthContext';
 
 const STATUS_COLORS = {
   Pending: { bg: '#FFF3E0', text: '#E65100' },
@@ -22,12 +23,17 @@ const STATUS_COLORS = {
 };
 
 export const OrdersScreen = ({ navigation }) => {
+  const { isAuthenticated } = useAuth();
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState(null);
 
   const fetchOrders = useCallback(async () => {
+    if (!isAuthenticated) {
+      setLoading(false);
+      return;
+    }
     try {
       setError(null);
       const data = await orderService.getMyOrders();
@@ -38,14 +44,29 @@ export const OrdersScreen = ({ navigation }) => {
       setLoading(false);
       setRefreshing(false);
     }
-  }, []);
+  }, [isAuthenticated]);
 
   useEffect(() => {
+    if (!isAuthenticated) return;
     const unsubscribe = navigation.addListener('focus', () => {
       fetchOrders();
     });
     return unsubscribe;
-  }, [navigation, fetchOrders]);
+  }, [navigation, fetchOrders, isAuthenticated]);
+
+  if (!isAuthenticated) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <EmptyState
+          icon="🔒"
+          title="Sign In Required"
+          description="Please sign in to view your orders and track live deliveries in Rwamagana."
+          actionText="Sign In"
+          onAction={() => navigation.navigate('Login', { returnTo: 'Orders' })}
+        />
+      </SafeAreaView>
+    );
+  }
 
   const onRefresh = () => {
     setRefreshing(true);

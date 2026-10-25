@@ -13,7 +13,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuth } from '../context/AuthContext';
 
-export const LoginScreen = ({ navigation }) => {
+export const LoginScreen = ({ route, navigation }) => {
   const { login } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -31,8 +31,19 @@ export const LoginScreen = ({ navigation }) => {
     setLoading(true);
 
     try {
-      await login(email.trim(), password);
-      // AuthContext state updates and AppNavigator redirects automatically
+      const data = await login(email.trim(), password);
+      // Return to attempted protected action if provided
+      if (data?.user?.role !== 'seller') {
+        const returnTo = route?.params?.returnTo;
+        const returnParams = route?.params?.returnParams;
+        if (returnTo) {
+          navigation.replace(returnTo, returnParams);
+        } else if (navigation.canGoBack()) {
+          navigation.goBack();
+        } else {
+          navigation.navigate('ClientTabs', { screen: 'HomeTab' });
+        }
+      }
     } catch (err) {
       setErrorMessage(
         err.response?.data?.error?.message || 'Invalid email or password.'
@@ -132,7 +143,14 @@ export const LoginScreen = ({ navigation }) => {
             {/* Register Link */}
             <View style={styles.registerRow}>
               <Text style={styles.registerPrompt}>Don't have an account? </Text>
-              <Pressable onPress={() => navigation.navigate('Register')}>
+              <Pressable
+                onPress={() =>
+                  navigation.navigate('Register', {
+                    returnTo: route?.params?.returnTo,
+                    returnParams: route?.params?.returnParams,
+                  })
+                }
+              >
                 <Text style={styles.registerLink}>Sign Up</Text>
               </Pressable>
             </View>
