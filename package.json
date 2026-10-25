@@ -1,0 +1,15 @@
+{
+  "name": "dge-commerce-workspace",
+  "version": "1.0.0",
+  "private": true,
+  "description": "D&G E-Commerce Monorepo workspace with React Native mobile app and Express Neon backend",
+  "scripts": {
+    "android": "npm run android --prefix mobile",
+    "ios": "npm run ios --prefix mobile",
+    "mobile:start": "npm run start --prefix mobile",
+    "mobile:test": "npm test --prefix mobile",
+    "backend:start": "npm run start --prefix backend",
+    "backend:dev": "npm run dev --prefix backend",
+    "backend:test": "npm test --prefix backend"
+  }
+}
