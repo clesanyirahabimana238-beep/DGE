@@ -7,16 +7,24 @@ import {
   Pressable,
   StyleSheet,
   RefreshControl,
-  SafeAreaView,
   StatusBar,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import productService from '../services/productService';
 import ProductCard from '../components/ProductCard';
 import Loading from '../components/Loading';
 import ErrorMessage from '../components/ErrorMessage';
 import EmptyState from '../components/EmptyState';
 
-const CATEGORIES = ['All', 'Groceries', 'Beverages', 'Clothing', 'Electronics', 'Home'];
+const CATEGORIES = [
+  'All',
+  'Clothes',
+  'Shoes',
+  'Bags',
+  'Household equipment',
+  'Jewellery',
+  'Cosmetics',
+];
 
 export const HomeScreen = ({ navigation }) => {
   const [products, setProducts] = useState([]);

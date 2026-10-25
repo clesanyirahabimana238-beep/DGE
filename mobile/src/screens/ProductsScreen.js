@@ -5,9 +5,9 @@ import {
   FlatList,
   StyleSheet,
   RefreshControl,
-  SafeAreaView,
   TextInput,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import productService from '../services/productService';
 import ProductCard from '../components/ProductCard';
 import Loading from '../components/Loading';

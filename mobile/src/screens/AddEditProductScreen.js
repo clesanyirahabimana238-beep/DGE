@@ -8,18 +8,25 @@ import {
   StyleSheet,
   Alert,
   ActivityIndicator,
-  SafeAreaView,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import productService from '../services/productService';
 
-const CATEGORIES = ['Groceries', 'Beverages', 'Clothing', 'Electronics', 'Home', 'Other'];
+const CATEGORIES = [
+  'Clothes',
+  'Shoes',
+  'Bags',
+  'Household equipment',
+  'Jewellery',
+  'Cosmetics',
+];
 
 export const AddEditProductScreen = ({ route, navigation }) => {
   const existingProduct = route.params?.product;
   const isEditing = !!existingProduct;
 
   const [name, setName] = useState(existingProduct?.name || '');
-  const [category, setCategory] = useState(existingProduct?.category || 'Groceries');
+  const [category, setCategory] = useState(existingProduct?.category || 'Clothes');
   const [price, setPrice] = useState(existingProduct ? String(existingProduct.price) : '');
   const [stockQuantity, setStockQuantity] = useState(
     existingProduct ? String(existingProduct.stock_quantity) : '10'

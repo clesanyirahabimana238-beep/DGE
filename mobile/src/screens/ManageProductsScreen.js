@@ -7,8 +7,8 @@ import {
   StyleSheet,
   Alert,
   RefreshControl,
-  SafeAreaView,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import productService from '../services/productService';
 import Loading from '../components/Loading';
 import ErrorMessage from '../components/ErrorMessage';

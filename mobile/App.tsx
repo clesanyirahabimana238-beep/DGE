@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-import { StatusBar } from 'react-native';
+import { StatusBar, Platform } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 // Initialize i18n multilingual support
@@ -21,7 +21,10 @@ import AppNavigator from './src/navigation/AppNavigator';
 function App(): React.JSX.Element {
   return (
     <SafeAreaProvider>
-      <StatusBar barStyle="light-content" backgroundColor="#1B5E20" />
+      <StatusBar
+        barStyle="light-content"
+        {...(Platform.OS === 'android' ? { backgroundColor: '#1B5E20' } : {})}
+      />
       <AuthProvider>
         <CartProvider>
           <AppNavigator />

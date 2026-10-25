@@ -6,17 +6,18 @@ import {
   Pressable,
   StyleSheet,
   ActivityIndicator,
-  SafeAreaView,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuth } from '../context/AuthContext';
 
 export const LoginScreen = ({ navigation }) => {
   const { login } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -88,17 +89,32 @@ export const LoginScreen = ({ navigation }) => {
 
             <View style={styles.inputGroup}>
               <Text style={styles.label}>Password</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="••••••••"
-                value={password}
-                onChangeText={(val) => {
-                  setPassword(val);
-                  if (errorMessage) setErrorMessage('');
-                }}
-                secureTextEntry
-                placeholderTextColor="#9E9E9E"
-              />
+              <View style={styles.passwordContainer}>
+                <TextInput
+                  style={styles.passwordInput}
+                  placeholder="••••••••"
+                  value={password}
+                  onChangeText={(val) => {
+                    setPassword(val);
+                    if (errorMessage) setErrorMessage('');
+                  }}
+                  secureTextEntry={!showPassword}
+                  placeholderTextColor="#9E9E9E"
+                />
+                <Pressable
+                  onPress={() => setShowPassword(!showPassword)}
+                  style={styles.eyeButton}
+                  hitSlop={8}
+                >
+                  <Text style={styles.eyeText}>{showPassword ? 'Hide' : 'Show'}</Text>
+                </Pressable>
+              </View>
+            </View>
+
+            <View style={styles.forgotRow}>
+              <Pressable onPress={() => navigation.navigate('ForgotPassword')}>
+                <Text style={styles.forgotText}>Forgot Password?</Text>
+              </Pressable>
             </View>
 
             <Pressable
@@ -224,6 +240,39 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: '#212121',
     backgroundColor: '#FAFAFA',
+  },
+  passwordContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#D0D0D0',
+    borderRadius: 8,
+    backgroundColor: '#FAFAFA',
+  },
+  passwordInput: {
+    flex: 1,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    fontSize: 15,
+    color: '#212121',
+  },
+  eyeButton: {
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+  },
+  eyeText: {
+    color: '#1B5E20',
+    fontSize: 13,
+    fontWeight: '700',
+  },
+  forgotRow: {
+    alignItems: 'flex-end',
+    marginBottom: 16,
+  },
+  forgotText: {
+    color: '#1B5E20',
+    fontSize: 13,
+    fontWeight: '600',
   },
   loginButton: {
     backgroundColor: '#E65100',

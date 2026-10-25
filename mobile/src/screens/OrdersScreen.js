@@ -6,8 +6,8 @@ import {
   Pressable,
   StyleSheet,
   RefreshControl,
-  SafeAreaView,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import orderService from '../services/orderService';
 import Loading from '../components/Loading';
 import ErrorMessage from '../components/ErrorMessage';

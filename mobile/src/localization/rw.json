@@ -39,7 +39,13 @@
     "haveAccount": "Ufite konti usanzwe?",
     "registerClientNotice": "Konti nshya zifungurwa nk'Umukiriya.",
     "loginSuccess": "Winjiye neza muri konti!",
-    "registerSuccess": "Konti yawe yafunguwe neza!"
+    "registerSuccess": "Konti yawe yafunguwe neza!",
+    "forgotPassword": "Wibagiwe ijambo ry'ibanga?",
+    "forgotPasswordTitle": "Guhindura Ijambo ry'Ibanga",
+    "forgotPasswordSubtitle": "Andika imeri yawe kugira ngo wohererezwe amabwiriza yo kurihindura",
+    "sendResetLink": "Ohereza Imeri yo Kurihindura",
+    "resetLinkSent": "Amabwiriza yo guhindura ijambo ry'ibanga yoherejwe kuri imeri yawe.",
+    "backToLogin": "Gusubira Kwinjira"
   },
   "home": {
     "searchPlaceholder": "Shakisha ibicuruzwa ku izina...",

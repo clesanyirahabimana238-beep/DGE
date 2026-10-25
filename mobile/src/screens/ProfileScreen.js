@@ -5,9 +5,9 @@ import {
   Pressable,
   StyleSheet,
   Alert,
-  SafeAreaView,
   ScrollView,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/AuthContext';
 import { changeAppLanguage } from '../localization/i18n';

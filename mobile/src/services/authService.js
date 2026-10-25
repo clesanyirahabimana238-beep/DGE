@@ -47,6 +47,14 @@ export const authService = {
   },
 
   /**
+   * Request password recovery instructions.
+   */
+  async forgotPassword(email) {
+    const response = await api.post('/api/auth/forgot-password', { email });
+    return response.data;
+  },
+
+  /**
    * Retrieve saved session from AsyncStorage.
    */
   async getSavedSession() {

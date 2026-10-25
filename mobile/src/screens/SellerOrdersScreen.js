@@ -7,9 +7,9 @@ import {
   StyleSheet,
   Alert,
   RefreshControl,
-  SafeAreaView,
   ActivityIndicator,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import sellerService from '../services/sellerService';
 import Loading from '../components/Loading';
 import ErrorMessage from '../components/ErrorMessage';

@@ -39,7 +39,13 @@
     "haveAccount": "Already have an account?",
     "registerClientNotice": "New accounts are registered as Clients.",
     "loginSuccess": "Logged in successfully!",
-    "registerSuccess": "Account created successfully!"
+    "registerSuccess": "Account created successfully!",
+    "forgotPassword": "Forgot Password?",
+    "forgotPasswordTitle": "Reset Password",
+    "forgotPasswordSubtitle": "Enter your email to receive recovery instructions",
+    "sendResetLink": "Send Reset Link",
+    "resetLinkSent": "Password reset instructions have been sent to your email.",
+    "backToLogin": "Back to Sign In"
   },
   "home": {
     "searchPlaceholder": "Search products by name...",

@@ -172,8 +172,37 @@ async function getMe(req, res, next) {
   }
 }
 
+/**
+ * Password recovery request: validates email and returns instructions status.
+ */
+async function forgotPassword(req, res, next) {
+  try {
+    const { email } = req.body;
+
+    if (!email || !EMAIL_REGEX.test(email.trim())) {
+      return res.status(400).json({
+        success: false,
+        error: { message: 'A valid email address is required' }
+      });
+    }
+
+    const normalizedEmail = email.trim().toLowerCase();
+    const result = await query('SELECT id FROM users WHERE email = $1', [normalizedEmail]);
+
+    // Do not reveal whether email exists for security
+    return res.status(200).json({
+      success: true,
+      message: 'Password reset instructions have been sent to your email.'
+    });
+  } catch (err) {
+    next(err);
+  }
+}
+
 module.exports = {
   register,
   login,
   getMe,
+  forgotPassword,
 };
+

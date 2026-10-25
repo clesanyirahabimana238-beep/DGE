@@ -127,4 +127,26 @@ describe('Authentication & Authorization Tests (Phase 3)', () => {
       expect(res.body.user).not.toHaveProperty('password_hash');
     });
   });
+
+  describe('POST /api/auth/forgot-password', () => {
+    it('should reject invalid email format', async () => {
+      const res = await request(app)
+        .post('/api/auth/forgot-password')
+        .send({ email: 'invalid-email' });
+
+      expect(res.statusCode).toBe(400);
+      expect(res.body.success).toBe(false);
+    });
+
+    it('should return 200 with instructions message for valid email', async () => {
+      const res = await request(app)
+        .post('/api/auth/forgot-password')
+        .send({ email: testClient.email });
+
+      expect(res.statusCode).toBe(200);
+      expect(res.body.success).toBe(true);
+      expect(res.body.message).toContain('instructions have been sent');
+    });
+  });
 });
+
