@@ -7,7 +7,9 @@
     "start": "node src/server.js",
     "dev": "node --watch src/server.js",
     "test": "jest --runInBand --testTimeout=30000",
-    "seed:users": "node scripts/seedSampleAccounts.js"
+    "seed:users": "node scripts/seedSampleAccounts.js",
+    "seed:products": "node scripts/seedProducts.js",
+    "seed:all": "node scripts/seedSampleAccounts.js && node scripts/seedProducts.js"
   },
   "engines": {
     "node": ">=18.0.0"

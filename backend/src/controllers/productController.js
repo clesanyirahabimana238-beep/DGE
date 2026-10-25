@@ -10,7 +10,7 @@ async function getAllProducts(req, res, next) {
 
     let sql = `
       SELECT p.id, p.name, p.description, p.price, p.category, p.image_url,
-             p.stock_quantity, p.seller_id, p.created_at, p.updated_at,
+             p.stock_quantity, p.seller_id, p.is_featured, p.created_at, p.updated_at,
              u.name AS seller_name
       FROM products p
       JOIN users u ON p.seller_id = u.id
@@ -60,7 +60,7 @@ async function getProductById(req, res, next) {
 
     const result = await query(
       `SELECT p.id, p.name, p.description, p.price, p.category, p.image_url,
-              p.stock_quantity, p.seller_id, p.created_at, p.updated_at,
+              p.stock_quantity, p.seller_id, p.is_featured, p.created_at, p.updated_at,
               u.name AS seller_name, u.email AS seller_email
        FROM products p
        JOIN users u ON p.seller_id = u.id
