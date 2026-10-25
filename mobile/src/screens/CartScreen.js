@@ -6,13 +6,15 @@ import {
   Pressable,
   Image,
   StyleSheet,
+  Alert,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import EmptyState from '../components/EmptyState';
 
 export const CartScreen = ({ navigation }) => {
+  const insets = useSafeAreaInsets();
   const { cartItems, totalAmount, totalItems, updateQuantity, removeFromCart } =
     useCart();
   const { isAuthenticated } = useAuth();
@@ -101,7 +103,7 @@ export const CartScreen = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView edges={['top', 'left', 'right']} style={styles.container}>
       {cartItems.length === 0 ? (
         <EmptyState
           icon="🛒"
@@ -120,11 +122,11 @@ export const CartScreen = ({ navigation }) => {
             data={cartItems}
             keyExtractor={(item) => String(item.product.id)}
             renderItem={renderItem}
-            contentContainerStyle={styles.listContent}
+            contentContainerStyle={[styles.listContent, { paddingBottom: 110 + insets.bottom }]}
           />
 
           {/* Checkout Footer */}
-          <View style={styles.footer}>
+          <View style={[styles.footer, { paddingBottom: Math.max(insets.bottom, 16) }]}>
             <View style={styles.totalRow}>
               <Text style={styles.totalLabel}>Total Amount:</Text>
               <Text style={styles.totalValue}>

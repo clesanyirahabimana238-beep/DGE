@@ -46,7 +46,7 @@ export const ProductsScreen = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView edges={['top', 'left', 'right']} style={styles.container}>
       <View style={styles.searchHeader}>
         <TextInput
           style={styles.searchInput}

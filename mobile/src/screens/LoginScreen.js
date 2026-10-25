@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -12,6 +12,8 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuth } from '../context/AuthContext';
+import { getApiBaseUrl } from '../services/api';
+import ServerConfigModal from '../components/ServerConfigModal';
 
 export const LoginScreen = ({ route, navigation }) => {
   const { login } = useAuth();
@@ -20,6 +22,28 @@ export const LoginScreen = ({ route, navigation }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [activeServerUrl, setActiveServerUrl] = useState('');
+  const [serverModalVisible, setServerModalVisible] = useState(false);
+
+  useEffect(() => {
+    loadServerUrl();
+  }, []);
+
+  const loadServerUrl = async () => {
+    const url = await getApiBaseUrl();
+    setActiveServerUrl(url);
+  };
+
+  const handleQuickFill = (role) => {
+    if (role === 'seller') {
+      setEmail('seller@dgecommerce.rw');
+      setPassword('Password123!');
+    } else {
+      setEmail('buyer@dgecommerce.rw');
+      setPassword('Password123!');
+    }
+    setErrorMessage('');
+  };
 
   const handleLogin = async () => {
     if (!email.trim() || !password) {
@@ -45,16 +69,22 @@ export const LoginScreen = ({ route, navigation }) => {
         }
       }
     } catch (err) {
-      setErrorMessage(
-        err.response?.data?.error?.message || 'Invalid email or password.'
-      );
+      if (!err.response) {
+        setErrorMessage(
+          `⚠️ Cannot connect to backend server at:\n${activeServerUrl || 'the configured address'}\n\nPlease ensure your phone is connected to the same Wi-Fi network as your computer, or tap "Server Settings" below to configure.`
+        );
+      } else {
+        setErrorMessage(
+          err.response?.data?.error?.message || 'Invalid email or password.'
+        );
+      }
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView edges={['top', 'left', 'right']} style={styles.container}>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         style={styles.keyboardView}
@@ -75,6 +105,25 @@ export const LoginScreen = ({ route, navigation }) => {
             <Text style={styles.cardSub}>
               Enter your credentials to access your account (Client or Seller)
             </Text>
+
+            {/* Quick Sample Credentials Bar */}
+            <View style={styles.quickFillContainer}>
+              <Text style={styles.quickFillLabel}>1-Tap Demo Credentials:</Text>
+              <View style={styles.quickFillButtons}>
+                <Pressable
+                  style={styles.quickFillBtn}
+                  onPress={() => handleQuickFill('buyer')}
+                >
+                  <Text style={styles.quickFillBtnText}>👤 Client Account</Text>
+                </Pressable>
+                <Pressable
+                  style={[styles.quickFillBtn, styles.quickFillSellerBtn]}
+                  onPress={() => handleQuickFill('seller')}
+                >
+                  <Text style={styles.quickFillSellerBtnText}>🏪 Seller Account</Text>
+                </Pressable>
+              </View>
+            </View>
 
             {errorMessage ? (
               <View style={styles.errorBox}>
@@ -155,8 +204,28 @@ export const LoginScreen = ({ route, navigation }) => {
               </Pressable>
             </View>
           </View>
+
+          {/* Server Config & Diagnostic Footer */}
+          <Pressable
+            style={styles.serverFooter}
+            onPress={() => setServerModalVisible(true)}
+          >
+            <Text style={styles.serverFooterText}>
+              🌐 Server: {activeServerUrl || 'Detecting...'}
+            </Text>
+            <Text style={styles.serverChangeText}>⚙️ Tap to test / change</Text>
+          </Pressable>
         </ScrollView>
       </KeyboardAvoidingView>
+
+      <ServerConfigModal
+        visible={serverModalVisible}
+        onClose={() => setServerModalVisible(false)}
+        onServerChanged={(newUrl) => {
+          setActiveServerUrl(newUrl);
+          setErrorMessage('');
+        }}
+      />
     </SafeAreaView>
   );
 };
@@ -173,19 +242,20 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     justifyContent: 'center',
     padding: 20,
+    paddingBottom: 32,
   },
   brandContainer: {
     alignItems: 'center',
-    marginBottom: 24,
+    marginBottom: 20,
   },
   logoBadge: {
-    width: 68,
-    height: 68,
-    borderRadius: 34,
+    width: 64,
+    height: 64,
+    borderRadius: 32,
     backgroundColor: '#1B5E20',
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 10,
+    marginBottom: 8,
     elevation: 4,
   },
   logoText: {
@@ -209,7 +279,7 @@ const styles = StyleSheet.create({
   formCard: {
     backgroundColor: '#FFFFFF',
     borderRadius: 14,
-    padding: 22,
+    padding: 20,
     shadowColor: '#000',
     shadowOpacity: 0.08,
     shadowRadius: 8,
@@ -224,12 +294,53 @@ const styles = StyleSheet.create({
   cardSub: {
     fontSize: 13,
     color: '#757575',
-    marginBottom: 18,
+    marginBottom: 14,
     lineHeight: 18,
+  },
+  quickFillContainer: {
+    backgroundColor: '#F1F8E9',
+    borderRadius: 8,
+    padding: 10,
+    marginBottom: 14,
+    borderWidth: 1,
+    borderColor: '#C5E1A5',
+  },
+  quickFillLabel: {
+    fontSize: 11,
+    fontWeight: '700',
+    color: '#33691E',
+    marginBottom: 6,
+  },
+  quickFillButtons: {
+    flexDirection: 'row',
+    gap: 8,
+  },
+  quickFillBtn: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 6,
+    paddingVertical: 7,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#Aed581',
+  },
+  quickFillBtnText: {
+    fontSize: 11,
+    fontWeight: '700',
+    color: '#33691E',
+  },
+  quickFillSellerBtn: {
+    borderColor: '#FFB74D',
+    backgroundColor: '#FFF8E1',
+  },
+  quickFillSellerBtnText: {
+    color: '#E65100',
+    fontSize: 11,
+    fontWeight: '700',
   },
   errorBox: {
     backgroundColor: '#FFEBEE',
-    padding: 10,
+    padding: 12,
     borderRadius: 8,
     marginBottom: 14,
     borderLeftWidth: 4,
@@ -237,11 +348,12 @@ const styles = StyleSheet.create({
   },
   errorText: {
     color: '#C62828',
-    fontSize: 13,
-    fontWeight: '500',
+    fontSize: 12,
+    fontWeight: '600',
+    lineHeight: 17,
   },
   inputGroup: {
-    marginBottom: 16,
+    marginBottom: 14,
   },
   label: {
     fontSize: 13,
@@ -298,7 +410,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 6,
+    marginTop: 4,
     elevation: 2,
   },
   buttonDisabled: {
@@ -313,7 +425,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 18,
+    marginTop: 16,
   },
   registerPrompt: {
     color: '#616161',
@@ -323,6 +435,26 @@ const styles = StyleSheet.create({
     color: '#1B5E20',
     fontSize: 14,
     fontWeight: '700',
+  },
+  serverFooter: {
+    alignItems: 'center',
+    marginTop: 18,
+    padding: 10,
+    borderRadius: 8,
+    backgroundColor: '#E8F5E9',
+    borderWidth: 1,
+    borderColor: '#C8E6C9',
+  },
+  serverFooterText: {
+    fontSize: 11,
+    color: '#2E7D32',
+    fontWeight: '600',
+  },
+  serverChangeText: {
+    fontSize: 11,
+    color: '#1B5E20',
+    fontWeight: '800',
+    marginTop: 2,
   },
 });
 

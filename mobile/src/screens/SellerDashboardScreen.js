@@ -40,7 +40,7 @@ export const SellerDashboardScreen = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView edges={['top', 'left', 'right']} style={styles.container}>
       <ScrollView
         contentContainerStyle={styles.content}
         refreshControl={

@@ -1,7 +1,8 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Text, StyleSheet } from 'react-native';
+import { Text, StyleSheet, Platform } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import SellerDashboardScreen from '../screens/SellerDashboardScreen';
 import ManageProductsScreen from '../screens/ManageProductsScreen';
@@ -21,13 +22,29 @@ const SalesIcon = () => <Text style={styles.tabIcon}>📈</Text>;
 const ProfileIcon = () => <Text style={styles.tabIcon}>👤</Text>;
 
 const SellerTabNavigator = () => {
+  const insets = useSafeAreaInsets();
+  const bottomPadding = Math.max(insets.bottom, 8);
+  const tabHeight = 56 + bottomPadding;
+
   return (
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: '#1B5E20',
         tabBarInactiveTintColor: '#757575',
-        tabBarStyle: styles.tabBar,
+        tabBarStyle: {
+          backgroundColor: '#FFFFFF',
+          borderTopColor: '#EEEEEE',
+          borderTopWidth: 1,
+          height: tabHeight,
+          paddingBottom: bottomPadding,
+          paddingTop: 6,
+          elevation: 8,
+          shadowColor: '#000',
+          shadowOffset: { width: 0, height: -2 },
+          shadowOpacity: 0.06,
+          shadowRadius: 4,
+        },
         tabBarLabelStyle: styles.tabBarLabel,
       }}
     >

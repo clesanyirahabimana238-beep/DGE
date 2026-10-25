@@ -175,7 +175,7 @@ export const SellerOrdersScreen = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView edges={['top', 'left', 'right']} style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Seller Orders ({orders.length})</Text>
       </View>

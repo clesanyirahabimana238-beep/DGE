@@ -66,7 +66,7 @@ export const OrderDetailsScreen = ({ route }) => {
   });
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView edges={['bottom', 'left', 'right']} style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
         {/* Status Card */}
         <View style={styles.card}>

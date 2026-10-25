@@ -187,14 +187,15 @@ async function seedProducts() {
     console.log('Connecting to database...');
 
     // 1. Ensure a seller exists to own the products
-    const sellerResult = await query("SELECT id, name, email FROM users WHERE role = 'seller' ORDER BY id ASC LIMIT 1");
+    const sellerResult = await query("SELECT id, name, email FROM users WHERE role = 'seller' ORDER BY id ASC");
     if (sellerResult.rows.length === 0) {
       console.error('Error: No seller user found in database. Please run npm run backend:seed:users first.');
       process.exit(1);
     }
 
-    const seller = sellerResult.rows[0];
-    console.log(`Using seller account: "${seller.name}" (${seller.email}, ID: ${seller.id})`);
+    const sellers = sellerResult.rows;
+    console.log(`Found ${sellers.length} seller accounts:`);
+    sellers.forEach(s => console.log(`  - "${s.name}" (${s.email}, ID: ${s.id})`));
 
     // 2. Ensure table has is_featured column
     await query('ALTER TABLE products ADD COLUMN IF NOT EXISTS is_featured BOOLEAN NOT NULL DEFAULT FALSE');
@@ -203,9 +204,11 @@ async function seedProducts() {
     await query('DELETE FROM products');
     console.log('Cleared existing product records.');
 
-    // 4. Insert each product
+    // 4. Insert each product, distributing across sellers
     let insertedCount = 0;
-    for (const p of PRODUCTS_DATA) {
+    for (let i = 0; i < PRODUCTS_DATA.length; i++) {
+      const p = PRODUCTS_DATA[i];
+      const assignedSeller = sellers[i % sellers.length];
       await query(
         `INSERT INTO products (name, description, price, category, image_url, stock_quantity, seller_id, is_featured)
          VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
@@ -216,14 +219,14 @@ async function seedProducts() {
           p.category,
           p.image_url,
           p.stock_quantity,
-          seller.id,
+          assignedSeller.id,
           p.is_featured
         ]
       );
       insertedCount++;
     }
 
-    console.log(`\nSuccessfully seeded ${insertedCount} products into database!`);
+    console.log(`\nSuccessfully seeded ${insertedCount} products across ${sellers.length} sellers!`);
 
     // 5. Verification query by category
     const countByCategory = await query(

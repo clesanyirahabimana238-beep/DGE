@@ -1,7 +1,8 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Text, StyleSheet } from 'react-native';
+import { Text, StyleSheet, Platform } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import HomeScreen from '../screens/HomeScreen';
 import ProductsScreen from '../screens/ProductsScreen';
@@ -26,6 +27,9 @@ const ProfileIcon = () => <Text style={styles.tabIcon}>👤</Text>;
 
 const ClientTabNavigator = () => {
   const { totalItems } = useCart();
+  const insets = useSafeAreaInsets();
+  const bottomPadding = Math.max(insets.bottom, 8);
+  const tabHeight = 56 + bottomPadding;
 
   return (
     <Tab.Navigator
@@ -33,7 +37,19 @@ const ClientTabNavigator = () => {
         headerShown: false,
         tabBarActiveTintColor: '#1B5E20',
         tabBarInactiveTintColor: '#757575',
-        tabBarStyle: styles.tabBar,
+        tabBarStyle: {
+          backgroundColor: '#FFFFFF',
+          borderTopColor: '#EEEEEE',
+          borderTopWidth: 1,
+          height: tabHeight,
+          paddingBottom: bottomPadding,
+          paddingTop: 6,
+          elevation: 8,
+          shadowColor: '#000',
+          shadowOffset: { width: 0, height: -2 },
+          shadowOpacity: 0.06,
+          shadowRadius: 4,
+        },
         tabBarLabelStyle: styles.tabBarLabel,
       }}
     >

@@ -1,26 +1,33 @@
 import { Platform } from 'react-native';
 
 /**
- * Environment configuration for mobile API requests.
- * 
- * - Android Emulator: Uses 10.0.2.2 to point to host machine localhost
- * - iOS Simulator / Web: Uses localhost (127.0.0.1)
- * - Physical Device: Replace with your development machine's local IP (e.g., http://192.168.1.X:5000)
- * - Production: Render deployed backend URL
+ * Environment configuration for D&G E-Commerce Mobile App.
+ *
+ * - PC Wi-Fi IP (192.168.10.101): Allows physical Android & iOS devices on the same Wi-Fi
+ *   to connect directly to the development backend server.
+ * - Android Emulator (10.0.2.2): Host loopback alias for Android Virtual Devices.
+ * - Production Render Cloud: Deployed Render backend URL with public HTTPS.
  */
 
-const DEV_API_URL = Platform.select({
-  android: 'http://10.0.2.2:5000',
-  ios: 'http://localhost:5000',
-  default: 'http://localhost:5000',
-});
+export const PC_WIFI_IP = '192.168.10.101';
+export const DEFAULT_DEV_URL = `http://${PC_WIFI_IP}:5000`;
+export const EMULATOR_DEV_URL = 'http://10.0.2.2:5000';
+export const PROD_API_URL = 'https://dgecommerce-api.onrender.com';
 
-// Production Render backend URL placeholder
-const PROD_API_URL = 'https://dgecommerce-backend.onrender.com';
+const DEFAULT_API_BASE_URL = Platform.select({
+  // Physical phones connect via local Wi-Fi IP address
+  android: DEFAULT_DEV_URL,
+  ios: 'http://localhost:5000',
+  default: DEFAULT_DEV_URL,
+});
 
 export const ENV = {
   IS_PRODUCTION: false,
-  API_BASE_URL: false ? PROD_API_URL : DEV_API_URL,
+  DEFAULT_API_URL: DEFAULT_API_BASE_URL,
+  PC_WIFI_API_URL: DEFAULT_DEV_URL,
+  EMULATOR_API_URL: EMULATOR_DEV_URL,
+  PROD_API_URL,
+  API_BASE_URL: DEFAULT_API_BASE_URL,
 };
 
 export default ENV;

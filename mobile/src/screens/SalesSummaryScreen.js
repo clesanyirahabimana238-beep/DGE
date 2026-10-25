@@ -53,7 +53,7 @@ export const SalesSummaryScreen = () => {
     deliveredCount > 0 ? Math.round(totalSales / deliveredCount) : 0;
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView edges={['top', 'left', 'right']} style={styles.container}>
       <ScrollView
         contentContainerStyle={styles.content}
         refreshControl={

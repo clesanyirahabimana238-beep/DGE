@@ -234,7 +234,7 @@ export const HomeScreen = ({ navigation }) => {
   );
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <SafeAreaView edges={['top', 'left', 'right']} style={styles.safeArea}>
       <StatusBar barStyle="light-content" backgroundColor="#1B5E20" />
 
       {/* Brand Header */}

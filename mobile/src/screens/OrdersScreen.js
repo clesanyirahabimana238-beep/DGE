@@ -56,7 +56,7 @@ export const OrdersScreen = ({ navigation }) => {
 
   if (!isAuthenticated) {
     return (
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView edges={['bottom', 'left', 'right']} style={styles.container}>
         <EmptyState
           icon="🔒"
           title="Sign In Required"
@@ -124,7 +124,7 @@ export const OrdersScreen = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView edges={['bottom', 'left', 'right']} style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerTitle}>My Orders</Text>
       </View>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -11,10 +11,18 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/AuthContext';
 import { changeAppLanguage } from '../localization/i18n';
+import { getApiBaseUrl } from '../services/api';
+import ServerConfigModal from '../components/ServerConfigModal';
 
 export const ProfileScreen = ({ navigation }) => {
   const { t, i18n } = useTranslation();
   const { user, logout, isSeller, isAuthenticated } = useAuth();
+  const [serverUrl, setServerUrl] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
+
+  useEffect(() => {
+    getApiBaseUrl().then(setServerUrl);
+  }, []);
 
   const handleLanguageChange = async (langCode) => {
     await changeAppLanguage(langCode);
@@ -40,7 +48,7 @@ export const ProfileScreen = ({ navigation }) => {
   const currentLang = i18n.language || 'en';
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView edges={['top', 'left', 'right']} style={styles.container}>
       <ScrollView contentContainerStyle={styles.content}>
         {/* Header / User Card */}
         {isAuthenticated && user ? (
@@ -172,6 +180,20 @@ export const ProfileScreen = ({ navigation }) => {
           </View>
         </View>
 
+        {/* Server Connection Card */}
+        <View style={styles.card}>
+          <Text style={styles.cardTitle}>⚙️ Backend Connection</Text>
+          <Text style={styles.serverInfoText}>
+            Current API URL: {serverUrl || 'Detecting...'}
+          </Text>
+          <Pressable
+            style={styles.serverConfigBtn}
+            onPress={() => setModalVisible(true)}
+          >
+            <Text style={styles.serverConfigBtnText}>Configure / Test Server</Text>
+          </Pressable>
+        </View>
+
         {/* Store Location Info */}
         <View style={styles.infoBox}>
           <Text style={styles.infoLocation}>📍 D&G E-Commerce</Text>
@@ -190,6 +212,12 @@ export const ProfileScreen = ({ navigation }) => {
           </Pressable>
         )}
       </ScrollView>
+
+      <ServerConfigModal
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        onServerChanged={(newUrl) => setServerUrl(newUrl)}
+      />
     </SafeAreaView>
   );
 };
@@ -422,6 +450,25 @@ const styles = StyleSheet.create({
   logoutText: {
     color: '#D32F2F',
     fontSize: 15,
+    fontWeight: '700',
+  },
+  serverInfoText: {
+    fontSize: 12,
+    color: '#616161',
+    marginBottom: 10,
+    fontWeight: '500',
+  },
+  serverConfigBtn: {
+    backgroundColor: '#E8F5E9',
+    borderRadius: 8,
+    paddingVertical: 10,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#C8E6C9',
+  },
+  serverConfigBtnText: {
+    color: '#1B5E20',
+    fontSize: 13,
     fontWeight: '700',
   },
 });

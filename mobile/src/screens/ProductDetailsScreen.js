@@ -8,12 +8,14 @@ import {
   StyleSheet,
   Alert,
 } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import productService from '../services/productService';
 import { useCart } from '../context/CartContext';
 import Loading from '../components/Loading';
 import ErrorMessage from '../components/ErrorMessage';
 
 export const ProductDetailsScreen = ({ route, navigation }) => {
+  const insets = useSafeAreaInsets();
   const { productId } = route.params || {};
   const { addToCart } = useCart();
   const [product, setProduct] = useState(null);
@@ -78,7 +80,7 @@ export const ProductDetailsScreen = ({ route, navigation }) => {
 
   return (
     <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollContent}>
+      <ScrollView contentContainerStyle={[styles.scrollContent, { paddingBottom: 90 + insets.bottom }]}>
         {/* Product Image */}
         <View style={styles.imageContainer}>
           {product.image_url ? (
@@ -138,7 +140,7 @@ export const ProductDetailsScreen = ({ route, navigation }) => {
       </ScrollView>
 
       {/* Bottom Action Bar */}
-      <View style={styles.bottomBar}>
+      <View style={[styles.bottomBar, { paddingBottom: Math.max(insets.bottom, 14) }]}>
         <View style={styles.quantityContainer}>
           <Pressable
             style={[styles.qtyButton, quantity <= 1 && styles.qtyButtonDisabled]}
